@@ -34,7 +34,7 @@ routes.post(
       }
       const salt = await bcrypt.genSalt(11);
       const hashPassword =  await bcrypt.hash(req.body.password, salt);
-      
+     
 
       let users = await new User({
         fullName: req.body.fullName,

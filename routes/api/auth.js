@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {check, validationResult} = require('express-validator')
+const {check, validationResult, cookie} = require('express-validator')
 const User = require('../../models/user');
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken')
@@ -32,16 +32,20 @@ router.post('/login',[
 
     const payload ={
       user:{
-        id: user.id
+        id: user["_id"]
       }
     }
 
     let token_auth = jwt.sign(payload,SecretKey)
-    res.cookie("token",token_auth)
+    res.cookie('token',token_auth)
+    
 
     // res.status(200).json({token_auth})
     console.log(token_auth)
-    res.send("Login Successful")
+    res.send({
+      msg:"Login Successful",
+      token:token_auth
+    })
 
   } catch (error) {
     res.send(error.message)
@@ -50,7 +54,8 @@ router.post('/login',[
 
 
 router.post("/logout",(req,res)=>{
-  res.cookie("token",null)
+ res.clearCookie("token")
+  // res.cookie("token",null)
   res.send("Logout")
 })
 module.exports = router;

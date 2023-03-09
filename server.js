@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 
 const cookieparser = require('cookie-parser')
+
+const cors = require('cors')
+app.use(cors())
 const db = require('./db/config')
 
 const md = require('./middleware/auth')
