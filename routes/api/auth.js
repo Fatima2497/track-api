@@ -37,7 +37,8 @@ router.post('/login',[
     }
 
     let token_auth = jwt.sign(payload,SecretKey)
-    res.cookie('token',token_auth)
+    // res.cookie('token',token_auth)
+    res.header('token',token_auth)
     
 
     // res.status(200).json({token_auth})
