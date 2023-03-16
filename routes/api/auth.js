@@ -55,7 +55,8 @@ router.post('/login',[
 
 
 router.post("/logout",(req,res)=>{
- res.clearCookie("token")
+//  res.clearCookie("token")
+  delete req.header("token")
   // res.cookie("token",null)
   res.send("Logout")
 })

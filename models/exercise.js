@@ -12,7 +12,7 @@ const exerciseSchema = mongoose.Schema({
   activity_type:{
     type: String,
     enum:['run','bicycle','walk','swim','hike'],
-    required: true
+    default:'run'
   },
   duration:{
     type: Number,

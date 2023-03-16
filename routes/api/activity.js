@@ -23,7 +23,7 @@ route.post('/add',auth,async(req,res)=>{
 route.get('/', auth, async (req, res) => {
 	try {
     const Id = req.user.id
-		const activitys = await Excer.find({userId: Id})
+		const activitys = await Excer.find({userId: Id}).sort({ date: -1 })
 		res.json(activitys);
 	} catch (err) {
 		console.error(err.message);
@@ -74,7 +74,7 @@ route.put('/:id',
 		res.json({ msg: 'activity updated' });
 	} catch (err) {
 		console.error(err.message);
-		res.duration(500).send('Server Error');
+		res.status(500).send('Server Error');
 	}
 });
 
@@ -82,14 +82,13 @@ route.put('/:id',
 route.delete('/:id', auth, async (req, res) => {
 
 	try {
-    let user_Id = req.user.id
-		const activityDelet = await Excer.findOneAndRemove({ _id: req.params.id, userId: user_Id });
+    let id = req.params.id
+		console.log(id)
+		const activityDelet = await Excer.findByIdAndDelete(id);
 
 		if (!activityDelet) {
 			return res.status(400).json({ msg: 'Activity not found' });
 		}
-
-		// await activityDelet.remove();
 
 		res.json({ msg: 'Activity removed' });
 	} catch (err) {

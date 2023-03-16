@@ -29,7 +29,7 @@ routes.post(
 
       if (user) {
         return res
-          .status(400)
+          .status(415)
           .json({ errors: [{ msg: "Email already exists" }] });
       }
       const salt = await bcrypt.genSalt(11);
